@@ -106,6 +106,7 @@ namespace Rapimed
             var result = await response.Content.ReadAsStringAsync();
             string mensaje = "Enviado:\n" + id + "\n" + cadenaConcatenada + "\nResultado:\n" + result;
             await DisplayAlert("", mensaje, "Ok");
+            cadenaConcatenada = "";
             return result;
         }
 
@@ -151,21 +152,21 @@ namespace Rapimed
                     cadenaConcatenada += accionPicker.SelectedIndex == 0  ?  "U": "P";
             }
             //valores de la entrada de comandos
-            if (!comandosEntry.Text.Contains(","))
+            if (comandosEntry.Text.Length <= 0)
                 return;
-            if (comandosEntry.Text.Split(',').Length == 0)
+            int cont = comandosEntry.Text.Split(',').Length;
+            if (cont == 0)
             {
                 cadenaConcatenada += "|" + comandosEntry.Text;
             }
-            else if (comandosEntry.Text.Split(',').Length >= 1)
+            else if (cont >= 1)
             {
                 var comands = comandosEntry.Text.Split(',');
                 foreach (var c in comands)
                 {
                     cadenaConcatenada += "|" + c;
                 }
-            }
-            
+            }            
         }
         string limpiarID(string ID)
         {
